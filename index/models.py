@@ -4,8 +4,9 @@ from django.db import models
 # Create your models here.
 class Slider(models.Model):
     title = models.CharField(max_length=180, verbose_name="Название слайда")
-    alt = models.CharField(max_length=180, verbose_name="Сео заголовок")
+    alt = models.CharField(max_length=180, blank=True, verbose_name="Сео заголовок")
     image = models.ImageField(upload_to="slider/", height_field=None, width_field=None, max_length=None)
+    status = models.BooleanField(default=None, verbose_name="Опубликовано")
 
     class Meta:
         verbose_name = "Слайд"

@@ -9,6 +9,7 @@ cookiecutter==1.7.3
 Django==3.2.3
 django-ckeditor==6.1.0
 django-js-asset==1.2.2
+django-taggit==1.4.0
 django-tailwind==2.0.1
 idna==2.10
 Jinja2==3.0.1
