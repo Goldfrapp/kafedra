@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import Post, Comment
+from .models import *
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'active', 'published')
+    list_filter = ('active', 'created', 'published')
+    search_fields = ('title', 'text', 'slug', 'intro_text')
+    prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'published'
+    ordering = ('active', 'published')
 
 
 @admin.register(Post)

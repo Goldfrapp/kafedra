@@ -25,7 +25,7 @@ class Category(models.Model):
     meta_keywords = models.TextField(blank=True, verbose_name='Ключевые слова')
     slug = models.SlugField(blank=True, unique=True, verbose_name='URL-ссылка',
                             help_text='Поле заполняется автоматически')
-    position = models.PositiveSmallIntegerField(default=0, verbose_name='Позиция')
+    position = models.PositiveSmallIntegerField(default=0, blank=True, verbose_name='Позиция')
     image = models.ImageField(upload_to='blog/category/', blank=True, verbose_name='Изображение')
     intro_text = models.TextField(blank=True, verbose_name='Превью')
     text = RichTextUploadingField(verbose_name="Описание", null=True, blank=True)
@@ -47,23 +47,26 @@ class Post(models.Model):
         ('published', 'Published'),
     )
     title = models.CharField(max_length=250)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='blog_posts')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='blog_category')
     body = RichTextUploadingField(verbose_name="Текст статьи", null=True, blank=True)
-    image = models.ImageField(upload_to='blog/articles/', blank=True, verbose_name='Изображение')
+    image = models.ImageField(upload_to='blog/%Y/%m/%d/', blank=True, verbose_name='Изображение')
     image_thumbnail = ImageSpecField(source='image', processors=[ResizeToFill(70, 70)], format='JPEG',
                                          options={'quality': 60})
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     objects = models.Manager()
     published = PublishedManager()
     tags = TaggableManager(blank=True)
 
     class Meta:
         ordering = ('-publish',)
+        verbose_name = 'Новость'
+        verbose_name_plural = 'Новости'
 
     def __str__(self):
         return self.title
@@ -87,6 +90,8 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ('created',)
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 
     def __str__(self):
         return 'Comment by {} on {}'.format(self.name, self.post)
