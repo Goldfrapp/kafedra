@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Comment
-from .forms import EmailPostForm, CommentForm
+from .models import *
+from .forms import *
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from taggit.models import Tag
