@@ -27,6 +27,8 @@ class Category(models.Model):
                             help_text='Поле заполняется автоматически')
     position = models.PositiveSmallIntegerField(default=0, blank=True, verbose_name='Позиция')
     image = models.ImageField(upload_to='blog/category/', blank=True, verbose_name='Изображение')
+    image_thumbnail = ImageSpecField(source='image', processors=[ResizeToFill(70, 70)], format='JPEG',
+                                         options={'quality': 60})
     intro_text = models.TextField(blank=True, verbose_name='Превью')
     text = RichTextUploadingField(verbose_name="Описание", null=True, blank=True)
     created = models.DateTimeField(default=timezone.now, verbose_name="Дата создания")

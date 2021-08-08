@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'taggit',
     'index.apps.IndexConfig',
     'blog.apps.BlogConfig',
+    'chair.apps.ChairConfig',
 ]
 
 MIDDLEWARE = [
