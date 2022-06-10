@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'taggit',
     'index.apps.IndexConfig',
     'blog.apps.BlogConfig',
+    'base.apps.BaseConfig',
     'chair.apps.ChairConfig',
 ]
 
